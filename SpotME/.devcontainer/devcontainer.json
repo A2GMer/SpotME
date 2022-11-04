@@ -1,0 +1,9 @@
+{
+	"name": "SpotME!",
+	// Create an image and a container from Docerfile
+	"dockerFile": "Dockerfile",
+        // Extension to be installed in remote VS Code
+	"extensions": [
+		"ms-python.python"
+	],
+}
