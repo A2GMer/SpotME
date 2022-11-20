@@ -18,6 +18,10 @@ app = Flask(__name__)
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
 YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 
+START_PHRASE = "記録開始"
+END_PHRASE = "記録終了"
+EXECUTE_FLAG = False
+
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
@@ -83,6 +87,21 @@ if __name__ == "__main__":
 
 # 受け取ったメッセージから起動するかどうかを決定する
 def is_execute(recievedMessage):
-    if recievedMessage == "OK":
-        return True
-    return False
+    # App起動フレーズ判定
+    if recievedMessage == START_PHRASE:
+        EXECUTE_FLAG = True
+    # App終了フレーズ判定
+    if recievedMessage == END_PHRASE:
+        EXECUTE_FLAG = False
+    
+    # App起動フレーズを言われてない場合は、False
+    if EXECUTE_FLAG == False:
+        return False
+    
+    # 空白区切りの三つフレーズで構成されているか？
+    messageList = recievedMessage.split()
+    if messageList.count() != 3:
+        return False
+    
+
+    return True
