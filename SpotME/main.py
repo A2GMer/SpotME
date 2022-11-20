@@ -60,15 +60,29 @@ def callback():
 #第二引数には、linebot.modelsに定義されている返信用のTextSendMessageオブジェクトを渡しています。
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+
     recievedMessage = event.message.text
-    sendMessage = "sample"
+    # 起動キーワードを検知
+    if is_execute(recievedMessage) == False:
+        return
+    
+    sendMessage = "OK"
+
+
     line_bot_api.reply_message(
         event.reply_token,
         #ここでオウム返しのメッセージを返します。
         TextSendMessage(text=sendMessage))
+
 
 if __name__ == "__main__":
 #    app.run()
     # ポート番号の設定
     port = int(os.getenv("PORT"))
     app.run(host="0.0.0.0", port=port)
+
+# 受け取ったメッセージから起動するかどうかを決定する
+def is_execute(recievedMessage):
+    if recievedMessage == "OK":
+        return True
+    return False
