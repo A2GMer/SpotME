@@ -60,13 +60,11 @@ def callback():
 #第二引数には、linebot.modelsに定義されている返信用のTextSendMessageオブジェクトを渡しています。
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    recievedMessage = event.message.text
+    sendMessage = "sample"
     line_bot_api.reply_message(
         event.reply_token,
-        
-        receivedMessage = event.message.text
-
-        sendMessage = "haha"
-        
+        #ここでオウム返しのメッセージを返します。
         TextSendMessage(text=sendMessage))
 
 if __name__ == "__main__":
