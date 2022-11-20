@@ -72,7 +72,7 @@ def handle_message(event):
         return
     
     # 返信メッセージ作成
-    sendMessage = '{0}さんが {1}￥ 立て替えました。'.format(msg[1], msg[2])
+    sendMessage = '{0}さんが {1}￥ 立て替えました。{2}'.format(msg[1], msg[2], msg.count())
 
 
     line_bot_api.reply_message(
@@ -92,8 +92,8 @@ def is_execute(recievedMessage):
     
     # 空白区切りの起動フレーズ数で構成されているか？
     messageList = recievedMessage.split()
-    if messageList.count() != EXECUTE_ARGCNT:
-        return False
+    # if messageList.count() != EXECUTE_ARGCNT:
+    #     return False
     
     if messageList[0] != EXECUTE_PHRASE:
         return False
