@@ -62,8 +62,12 @@ def callback():
 def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
-        #ここでオウム返しのメッセージを返します。
-        TextSendMessage("hogehoge"))
+        
+        receivedMessage = event.message.text
+
+        sendMessage = "haha"
+        
+        TextSendMessage(text=sendMessage))
 
 if __name__ == "__main__":
 #    app.run()
