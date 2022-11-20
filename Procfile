@@ -1,1 +1,1 @@
-web: gunicorn spotmelinebot:app
+web: gunicorn main:app
