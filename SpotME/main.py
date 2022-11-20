@@ -99,9 +99,9 @@ def is_execute(recievedMessage):
         return False
     
     # 空白区切りの三つフレーズで構成されているか？
-    messageList = recievedMessage.split()
-    if messageList.count() != 3:
-        return False
+    # messageList = recievedMessage.split()
+    # if messageList.count() != 3:
+    #     return False
     
 
     return True
