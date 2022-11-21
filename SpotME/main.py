@@ -150,7 +150,7 @@ def execute(msg):
         membernum = 0
         for r in itertools.groupby(result, lambda x: x[0]):
             membernum += 1
-        perpay = total / membernum
+        perpay = math.ceil(total / membernum)
         
         msg = "ひとりの負担額は、{0}円です。\n".format(perpay)
 
