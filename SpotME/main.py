@@ -139,10 +139,11 @@ def execute(msg):
                 except:
                     mes = "exception"
                     print(mes)
+        total = 0
         for r in result:
-            print(r)
-        
-        return "精算"
+            total += r[1]
+        perpay = total / len(result)
+        return "ひとりの負担額は、{0}円です。".format(perpay)
 
 
 
