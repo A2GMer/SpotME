@@ -1,6 +1,7 @@
 from flask import Flask, request, abort
 import psycopg2
 import itertools
+import textwrap
 import math
 import os
 # ヘルプ機能
@@ -231,7 +232,7 @@ def execute(msg):
     #     return msg
         
     elif msg[0] == 'ヘルプ':
-        r = '''\どうも！SpotME!です。
+        r = textwrap.dedent('''\どうも！SpotME!です。
     ■使い方
     【誰かが立て替えた時】
     記録 名前 金額(数字のみ)  立て替えたもの
@@ -251,7 +252,7 @@ def execute(msg):
     【追加したい機能】
     誰が払うと丁度いいか教えてくれる機能
     メンバー登録機能
-    '''
+    ''')
 
         return r
 
