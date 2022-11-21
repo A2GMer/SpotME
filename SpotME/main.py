@@ -74,7 +74,7 @@ def handle_message(event):
     if rtn == False:
         return
     
-    msg2 = execute(msg)
+    # msg2 = execute(msg)
 
     # with get_connection() as conn:
     #     with conn.cursor(name="cs") as cur:
@@ -86,8 +86,7 @@ def handle_message(event):
     #             mes = "exception"
 
     # 返信メッセージ作成
-    print(msg[1], msg[2])
-    sendMessage = '{0}さんが {1}円 立て替えました。'.format(msg[1], msg[2])
+    sendMessage = execute(msg)
 
     line_bot_api.reply_message(
         event.reply_token,
@@ -123,9 +122,11 @@ def execute(msg):
                     sqlStr = "INSERT INTO ledger(user_name, amount_money, content) VALUES('{0}', {1}, '{2}');".format(msg[1], msg[2], msg[3])
                     cur.execute(sqlStr)
                     conn.commit()
+                    return '{0}さんが {1}円 立て替えました。'.format(msg[1], msg[2])
                 except:
                     mes = "exception"
                     print(mes)
+                    return '記録に失敗しました。'
 
     elif msg[0] == "精算":
         # SHOW
@@ -140,6 +141,8 @@ def execute(msg):
                     print(mes)
         for r in result:
             print(r)
+        
+        return "精算"
 
 
 
