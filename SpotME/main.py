@@ -1,6 +1,7 @@
 from flask import Flask, request, abort
 import psycopg2
 import itertools
+import math
 import os
 
 from linebot import (
@@ -160,7 +161,7 @@ def execute(msg):
             for l in list(r):
                 pertotal += l[1]
             # TODO: その人の支払合計額 - 一人当たりの支払
-            paid = pertotal - perpay
+            paid = math.ceil(pertotal - perpay)
             
             if paid == 0:
                 # TODO: 0になればpaidequal
