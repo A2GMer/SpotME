@@ -146,12 +146,15 @@ def execute(msg):
         for r in result:
             total += r[1]
         # TODO: 一人当たりの支払を算出
-        perpay = total / len(result)
+        membernum = 0
+        for r in itertools.groupby(result, lambda x: x[0]):
+            membernum += 1
+        perpay = total / membernum
         
         msg = "ひとりの負担額は、{0}円です。¥n".format(perpay)
 
         # TODO: 各人ごとにループ
-        for n, r in itertools.groupby(result, lambda x: x[1]):
+        for n, r in itertools.groupby(result, lambda x: x[0]):
             # TODO: その人の支払合計額を算出
             pertotal = 0
             for l in list(r):
