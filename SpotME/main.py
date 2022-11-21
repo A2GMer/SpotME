@@ -230,7 +230,7 @@ def execute(msg):
     #     msg = "{0}さんが 払うといい感じです。".format()
     #     return msg
         
-    elif msg[0] == 'ヘルプ:':
+    elif msg[0] == 'ヘルプ':
         r = 'どうも！SpotME!です。\n'
         '■使い方\n'
         '【誰かが立て替えた時】\n'
