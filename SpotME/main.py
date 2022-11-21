@@ -37,7 +37,7 @@ def hello_world():
 #Webhookからのリクエストをチェックします。
 @app.route("/callback", methods=['POST'])
 def get_connection():
-    dsn = "host={0} port=5432 dbname={1} user={2} password={3}".format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
+    dsn = 'host={0} port=5432 dbname={1} user={2} password={3}'.format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
     return psycopg2.connect(dsn)
 
 
