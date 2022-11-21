@@ -125,10 +125,10 @@ def execute(msg):
                     cur.execute(sqlStr, (msg[1], msg[2], msg[3]))
                     # (mes,) = cur.fetchone()
                     conn.commit()
-                    mes = "DONE!!"
+                    mes = sqlStr, (msg[1], msg[2], msg[3])
                 except:
                     mes = "exception"
-        print(mes)
+        print(sqlStr, (msg[1], msg[2], msg[3]))
 
     elif msg[0] == "精算":
         # SHOW
