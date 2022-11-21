@@ -99,7 +99,8 @@ def handle_message(event):
     if rtn == False:
         return
     
-    msg2 = get_response_message(event.message.text)
+    # msg2 = get_response_message(event.message.text)
+    msg2 = "a"
 
     # 返信メッセージ作成
     sendMessage = '{0} {1}'.format(msg[0], msg2)
