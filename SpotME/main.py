@@ -93,17 +93,17 @@ def handle_message(event):
     # 返信メッセージ作成
     # sendMessage = '{0} {1}'.format(msg[0], msg2)
 
-    # with get_connection() as conn:
-    #     with conn.cursor(name="cs") as cur:
-    #         try:
-    #             sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
-    #             cur.execute(sqlStr)
-    #             (mes,) = cur.fetchone()
-    #         except:
-    #             mes = "exception"
+    with get_connection() as conn:
+        with conn.cursor(name="cs") as cur:
+            try:
+                sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
+                cur.execute(sqlStr)
+                (mes,) = cur.fetchone()
+            except:
+                mes = "exception"
 
     # sendMessage = '{0}さんが {1}円 立て替えました。{2}'.format(msg[1], msg[2])
-    sendMessage = get_response_message()
+    sendMessage = mes
 
     line_bot_api.reply_message(
         event.reply_token,
@@ -136,13 +136,13 @@ def get_connection():
     return psycopg2.connect(dsn)
 
 # お試し（日付取得 SQL）
-def get_response_message():
-    with get_connection() as conn:
-        with get_connection() as conn:
-            with conn.cursor(name="cs") as cur:
-                try:
-                    sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
-                    cur.execute(sqlStr)
-                    (mes,) = cur.fetchone()
-                except:
-                    mes = "exception"
+# def get_response_message():
+#     with get_connection() as conn:
+#         with get_connection() as conn:
+#             with conn.cursor(name="cs") as cur:
+#                 try:
+#                     sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
+#                     cur.execute(sqlStr)
+#                     (mes,) = cur.fetchone()
+#                 except:
+#                     mes = "exception"
