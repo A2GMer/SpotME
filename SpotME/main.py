@@ -86,6 +86,7 @@ def handle_message(event):
     #             mes = "exception"
 
     # 返信メッセージ作成
+    print(msg[1], msg[2])
     sendMessage = '{0}さんが {1}円 立て替えました。'.format(msg[1], msg[2])
 
     line_bot_api.reply_message(
@@ -116,6 +117,7 @@ def is_execute(recievedMessage):
 def execute(msg):
     if msg[0] == "記録":
         # INSERT
+        print("INSERT処理")
         with get_connection() as conn:
             with conn.cursor() as cur:
                 try:
