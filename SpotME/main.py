@@ -90,26 +90,20 @@ def handle_message(event):
     if rtn == False:
         return
     
-    # msg2 = get_response_message()
-    msg2 = 'host={0} port=5432 dbname={1} user={2} password={3}'.format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
-
     # 返信メッセージ作成
     # sendMessage = '{0} {1}'.format(msg[0], msg2)
-    dsn = 'host={0} port=5432 dbname={1} user={2} password={3}'.format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
 
-    with get_connection() as conn:
-        with conn.cursor(name="cs") as cur:
-            try:
-                sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
-                cur.execute(sqlStr)
-                (mes,) = cur.fetchone()
-            except:
-                mes = "exception"
+    # with get_connection() as conn:
+    #     with conn.cursor(name="cs") as cur:
+    #         try:
+    #             sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
+    #             cur.execute(sqlStr)
+    #             (mes,) = cur.fetchone()
+    #         except:
+    #             mes = "exception"
 
     # sendMessage = '{0}さんが {1}円 立て替えました。{2}'.format(msg[1], msg[2])
-    sendMessage = mes
-    
-
+    sendMessage = get_response_message()
 
     line_bot_api.reply_message(
         event.reply_token,
@@ -136,6 +130,19 @@ def is_execute(recievedMessage):
 
     return True, messageList
 
+# DB接続
 def get_connection():
     dsn = 'host={0} port=5432 dbname={1} user={2} password={3}'.format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
     return psycopg2.connect(dsn)
+
+# お試し（日付取得 SQL）
+def get_response_message():
+    with get_connection() as conn:
+        with get_connection() as conn:
+            with conn.cursor(name="cs") as cur:
+                try:
+                    sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
+                    cur.execute(sqlStr)
+                    (mes,) = cur.fetchone()
+                except:
+                    mes = "exception"
