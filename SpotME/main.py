@@ -99,7 +99,7 @@ def handle_message(event):
     msg2 = get_response_message(event.message.text)
 
     # 返信メッセージ作成
-    sendMessage = '{0}さんが {1}円 立て替えました。{2}'.format(msg[1], msg[2], msg2)
+    sendMessage = '{0}さんが {1}円 立て替えました。{2}'.format(msg[1], msg[2])
     
 
 
