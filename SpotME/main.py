@@ -94,6 +94,8 @@ def handle_message(event):
 
     # 返信メッセージ作成
     sendMessage = execute(msg)
+    if sendMessage == '':
+        return
 
     line_bot_api.reply_message(
         event.reply_token,
@@ -256,6 +258,8 @@ def execute(msg):
         ''')
 
         return r
+    else:
+        return ''
 
 
 
