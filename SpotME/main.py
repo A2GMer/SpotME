@@ -40,7 +40,7 @@ def get_connection():
     dsn = "host={0} port=5432 dbname={1} user={2} password={3}".format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
     return psycopg2.connect(dsn)
 
-    
+
 # 返事取得関数（今は暫定で日付返す関数）
 def get_response_message(mes_from):
     # "日付"が入力された時だけDBアクセス
@@ -102,7 +102,8 @@ def handle_message(event):
     msg2 = get_response_message(event.message.text)
 
     # 返信メッセージ作成
-    sendMessage = '{0}さんが {1}円 立て替えました。{2}'.format(msg[1], msg[2])
+    sendMessage = '{0} {1}'.format(msg[0], msg2)
+    # sendMessage = '{0}さんが {1}円 立て替えました。{2}'.format(msg[1], msg[2])
     
 
 
@@ -123,10 +124,10 @@ def is_execute(recievedMessage):
     
     # 空白区切りの起動フレーズ数で構成されているか？
     messageList = recievedMessage.split()
-    if len(messageList) != EXECUTE_ARGCNT:
-        return False
+    # if len(messageList) != EXECUTE_ARGCNT:
+    #     return False
     
-    if messageList[0] != EXECUTE_PHRASE:
-        return False
+    # if messageList[0] != EXECUTE_PHRASE:
+    #     return False
 
     return True, messageList
