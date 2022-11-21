@@ -36,28 +36,25 @@ def hello_world():
 ## 1 ##
 #Webhookからのリクエストをチェックします。
 @app.route("/callback", methods=['POST'])
-# def get_connection():
-#     dsn = 'host={0} port=5432 dbname={1} user={2} password={3}'.format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
-#     return psycopg2.connect(dsn)
+def get_connection():
+    dsn = 'host={0} port=5432 dbname={1} user={2} password={3}'.format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
+    return psycopg2.connect(dsn)
 
 
 # # 返事取得関数（今は暫定で日付返す関数）
-# def get_response_message(mes_from):
-#     # "日付"が入力された時だけDBアクセス
-#     if mes_from=="日付":
-#         with get_connection() as conn:
-#             with conn.cursor(name="cs") as cur:
-#                 try:
-#                     sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
-#                     cur.execute(sqlStr)
-#                     (mes,) = cur.fetchone()
-#                     return mes
-#                 except:
-#                     mes = "exception"
-#                     return mes
+def get_response_message(mes_from):
+    # "日付"が入力された時だけDBアクセス
+    with get_connection() as conn:
+        with conn.cursor(name="cs") as cur:
+            try:
+                sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
+                cur.execute(sqlStr)
+                (mes,) = cur.fetchone()
+                return mes
+            except:
+                mes = "exception"
+                return mes
 
-#     # それ以外はオウム返し
-#     return mes_from
 
 
 def callback():
