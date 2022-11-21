@@ -1,4 +1,3 @@
-
 from flask import Flask, request, abort
 import psycopg2
 import os
@@ -30,27 +29,12 @@ line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 @app.route("/")
-def hello_world():
-    return "hello world!"
+# def hello_world():
+    # return "hello world!"
 
 ## 1 ##
 #Webhookからのリクエストをチェックします。
 @app.route("/callback", methods=['POST'])
-# # 返事取得関数（今は暫定で日付返す関数）
-# def get_response_message():
-    # with get_connection() as conn:
-        # with conn.cursor(name="cs") as cur:
-        #     try:
-        #         sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
-        #         cur.execute(sqlStr)
-        #         cur.fetchone()
-        #         # return mes
-        #     except:
-        #         mes = "exception"
-        #         # return mes
-
-
-
 def callback():
     # リクエストヘッダーから署名検証のための値を取得します。
     # get X-Line-Signature header value
@@ -75,7 +59,7 @@ def callback():
 
 ## 2 ##
 ###############################################
-#LINEのメッセージの取得と返信内容の設定(オウム返し)
+#LINEのメッセージの取得と返信内容の設定
 ###############################################
 #LINEでMessageEvent（普通のメッセージを送信された場合）が起こった場合に、
 #def以下の関数を実行します。
@@ -90,20 +74,19 @@ def handle_message(event):
     if rtn == False:
         return
     
+    msg = execute(msg)
+
+    # with get_connection() as conn:
+    #     with conn.cursor(name="cs") as cur:
+    #         try:
+    #             sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
+    #             cur.execute(sqlStr)
+    #             (mes,) = cur.fetchone()
+    #         except:
+    #             mes = "exception"
+
     # 返信メッセージ作成
-    # sendMessage = '{0} {1}'.format(msg[0], msg2)
-
-    with get_connection() as conn:
-        with conn.cursor(name="cs") as cur:
-            try:
-                sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
-                cur.execute(sqlStr)
-                (mes,) = cur.fetchone()
-            except:
-                mes = "exception"
-
-    # sendMessage = '{0}さんが {1}円 立て替えました。{2}'.format(msg[1], msg[2])
-    sendMessage = mes
+    sendMessage = '{0}さんが {1}円 立て替えました。'.format(msg[1], msg[2])
 
     line_bot_api.reply_message(
         event.reply_token,
@@ -112,7 +95,6 @@ def handle_message(event):
 
 
 if __name__ == "__main__":
-#    app.run()
     # ポート番号の設定
     port = int(os.getenv("PORT"))
     app.run(host="0.0.0.0", port=port)
@@ -130,10 +112,37 @@ def is_execute(recievedMessage):
 
     return True, messageList
 
+
+def execute(msg):
+    if msg[0] == "記録":
+        # INSERT
+        insert_ledger(msg)
+        print("a")
+
+    elif msg[0] == "精算":
+        # SHOW
+        print("a")
+
+
+
+
 # DB接続
 def get_connection():
     dsn = 'host={0} port=5432 dbname={1} user={2} password={3}'.format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
     return psycopg2.connect(dsn)
+
+
+def insert_ledger(msg):
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            try:
+                sqlStr = "INSERT INTO ledger (user_name, amount_money, content) VALUES ({0}, {1}, {2})".format(msg[1], msg[2], msg[3])
+                cur.execute(sqlStr)
+                # (mes,) = cur.fetchone()
+                conn.commit()
+            except:
+                mes = "exception"
+
 
 # お試し（日付取得 SQL）
 # def get_response_message():
