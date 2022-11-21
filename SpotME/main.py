@@ -44,15 +44,16 @@ def get_connection():
 # # 返事取得関数（今は暫定で日付返す関数）
 def get_response_message():
     with get_connection() as conn:
-        with conn.cursor(name="cs") as cur:
-            try:
-                sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
-                cur.execute(sqlStr)
-                cur.fetchone()
-                # return mes
-            except:
-                mes = "exception"
-                # return mes
+        a = 2
+        # with conn.cursor(name="cs") as cur:
+        #     try:
+        #         sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
+        #         cur.execute(sqlStr)
+        #         cur.fetchone()
+        #         # return mes
+        #     except:
+        #         mes = "exception"
+        #         # return mes
 
 
 
