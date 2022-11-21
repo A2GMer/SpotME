@@ -3,6 +3,10 @@ import psycopg2
 import itertools
 import math
 import os
+# ヘルプ機能
+# 名前が英語でもできるように
+# userテーブルでメンバー登録機能
+# 誰が払うとバランス良い？
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -186,6 +190,29 @@ def execute(msg):
         
         msg += "※小数点は切り上げてます。"
         return msg
+    elif msg[0] == "ヘルプ":
+        str ="""
+        どうも！SpotME!です。
+        ■使い方
+        【誰かが立て替えた時】
+        記録 名前 金額(数字のみ)  立て替えたもの
+        　例）記録 大翔 2000 マクド
+        【精算したい時】
+        精算
+        【記録クリアしたい時】
+        記録クリア
+        
+        ※多分バグが多いです。
+        許してね。(moon wink)
+        気が向いたら直します。
+        
+        【既知バグ】
+        英語の名前がダメ⇨WINさんすみません。
+        金額に数字以外を入れたらあかん
+        【追加したい機能】
+        誰が払うと丁度いいか教えてくれる機能
+        メンバー登録機能
+        """
 
 
 
