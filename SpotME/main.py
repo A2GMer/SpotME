@@ -213,6 +213,7 @@ def execute(msg):
         誰が払うと丁度いいか教えてくれる機能
         メンバー登録機能
         """
+        return msg
 
 
 
