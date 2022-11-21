@@ -151,6 +151,8 @@ def execute(msg):
                 except:
                     return '精算情報取得に失敗しました。'
         
+        if len(result) > 1:
+            return '登録情報はありません。'
         # TODO: 支払総額を取得
         total = 0
         for r in result:
