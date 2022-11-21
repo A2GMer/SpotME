@@ -121,7 +121,7 @@ def execute(msg):
         with get_connection() as conn:
             with conn.cursor() as cur:
                 try:
-                    sqlStr = """INSERT INTO ledger(user_name, amount_money, content) VALUES('hoge', 2000, 'hogehoge');"""
+                    sqlStr = "INSERT INTO ledger(user_name, amount_money, content) VALUES('hoge', {0}, 'hogehoge');".format(msg[2])
                     cur.execute(sqlStr)
                     # (mes,) = cur.fetchone()
                     conn.commit()
