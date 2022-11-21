@@ -1,5 +1,6 @@
 
 from flask import Flask, request, abort
+import psycopg2
 import os
 
 from linebot import (
@@ -17,6 +18,10 @@ app = Flask(__name__)
 #環境変数取得
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
 YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
+DB_HOST = os.environ["DB_HOST"]
+DB_NAME = os.environ["DB_NAME"]
+DB_USER = os.environ["DB_USER"]
+DB_PASSWORD = os.environ["DB_PASSWORD"]
 
 EXECUTE_ARGCNT = 4
 EXECUTE_PHRASE = "記録"
@@ -31,6 +36,26 @@ def hello_world():
 ## 1 ##
 #Webhookからのリクエストをチェックします。
 @app.route("/callback", methods=['POST'])
+def get_connection():
+    dsn = "host={0} port=5432 dbname={1} user={2} password={3}".format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
+    return psycopg2.connect(dsn)
+# 返事取得関数（今は暫定で日付返す関数）
+def get_response_message(mes_from):
+    # "日付"が入力された時だけDBアクセス
+    if mes_from=="日付":
+        with get_connection() as conn:
+            with conn.cursor(name="cs") as cur:
+                try:
+                    sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
+                    cur.execute(sqlStr)
+                    (mes,) = cur.fetchone()
+                    return mes
+                except:
+                    mes = "exception"
+                    return mes
+
+    # それ以外はオウム返し
+    return mes_from
 def callback():
     EXECUTE_FLAG = False
     # リクエストヘッダーから署名検証のための値を取得します。
@@ -71,13 +96,16 @@ def handle_message(event):
     if rtn == False:
         return
     
+    msg2 = get_response_message(event.message.text)
+
     # 返信メッセージ作成
-    sendMessage = '{0}さんが {1}￥ 立て替えました。'.format(msg[1], msg[2])
+    sendMessage = '{0}さんが {1}円 立て替えました。{2}'.format(msg[1], msg[2], msg2)
+    
 
 
     line_bot_api.reply_message(
         event.reply_token,
-        #ここでオウム返しのメッセージを返します。
+        #ここでメッセージを返します。
         TextSendMessage(text=sendMessage))
 
 
