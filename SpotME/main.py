@@ -203,6 +203,7 @@ def execute(msg):
     #         return '登録情報はありません。'
 
     #     total = 0
+        
     #     for r in result:
     #         total += r[1]
     #     # TODO: 一人当たりの支払を算出
@@ -210,11 +211,9 @@ def execute(msg):
     #     for r in itertools.groupby(result, lambda x: x[0]):
     #         membernum += 1
     #     perpay = math.ceil(total / membernum)
-        
-    #     msg = "ひとりの負担額は、{0}円です。\n\n".format(perpay)
 
     #     # TODO: 各人ごとにループ
-    #     payman = ("",0)
+    #     payman = {}
     #     for n, r in itertools.groupby(result, lambda x: x[0]):
     #         # TODO: その人の支払合計額を算出
     #         pertotal = 0
@@ -244,7 +243,7 @@ def execute(msg):
         記録クリア
         
         ※多分バグが多いです。
-        許してね。(moon wink)
+        許してね。
         気が向いたら直します。
         
         【既知バグ】
