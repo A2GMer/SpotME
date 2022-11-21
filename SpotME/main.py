@@ -74,7 +74,7 @@ def handle_message(event):
     if rtn == False:
         return
     
-    msg = execute(msg)
+    msg2 = execute(msg)
 
     # with get_connection() as conn:
     #     with conn.cursor(name="cs") as cur:
