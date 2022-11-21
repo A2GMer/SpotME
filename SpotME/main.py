@@ -42,7 +42,7 @@ def get_connection():
 
 
 # # 返事取得関数（今は暫定で日付返す関数）
-def get_response_message(mes_from):
+def get_response_message():
     # "日付"が入力された時だけDBアクセス
     with get_connection() as conn:
         with conn.cursor(name="cs") as cur:
@@ -96,7 +96,7 @@ def handle_message(event):
     if rtn == False:
         return
     
-    # msg2 = get_response_message(event.message.text)
+    # msg2 = get_response_message()
     msg2 = 'host={0} port=5432 dbname={1} user={2} password={3}'.format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
 
     # 返信メッセージ作成
