@@ -117,13 +117,11 @@ def is_execute(recievedMessage):
 def execute(msg):
     if msg[0] == "記録":
         # INSERT
-        print("INSERT処理")
         with get_connection() as conn:
             with conn.cursor() as cur:
                 try:
                     sqlStr = "INSERT INTO ledger(user_name, amount_money, content) VALUES('{0}', {1}, '{2}');".format(msg[1], msg[2], msg[3])
                     cur.execute(sqlStr)
-                    # (mes,) = cur.fetchone()
                     conn.commit()
                 except:
                     mes = "exception"
@@ -131,7 +129,17 @@ def execute(msg):
 
     elif msg[0] == "精算":
         # SHOW
-        print("a")
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                try:
+                    sqlStr = "SELECT * FROM ledger;"
+                    cur.execute(sqlStr)
+                    result = cur.fetchall()
+                except:
+                    mes = "exception"
+                    print(mes)
+        for r in result:
+            print(r)
 
 
 
