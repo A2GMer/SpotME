@@ -1,5 +1,6 @@
 from flask import Flask, request, abort
 import psycopg2
+import itertools
 import os
 
 from linebot import (
@@ -139,11 +140,35 @@ def execute(msg):
                 except:
                     mes = "exception"
                     print(mes)
+        
+        # TODO: 支払総額を取得
         total = 0
         for r in result:
             total += r[1]
+        # TODO: 一人当たりの支払を算出
         perpay = total / len(result)
-        return "ひとりの負担額は、{0}円です。".format(perpay)
+        
+        msg = "ひとりの負担額は、{0}円です。¥n".format(perpay)
+
+        # TODO: 各人ごとにループ
+        for n, r in itertools.groupby(result, lambda x: x[1]):
+            # TODO: その人の支払合計額を算出
+            pertotal = 0
+            for l in list(r):
+                pertotal += l[1]
+            # TODO: その人の支払合計額 - 一人当たりの支払
+            paid = pertotal - perpay
+            
+            if paid == 0:
+                # TODO: 0になればpaidequal
+                msg += "{0}さんは、精算の必要はありません。¥n".format(n)
+            elif paid < 0:
+                # TODO: マイナスになればpaidlow
+                msg += "{0}さんは、{1}円 支払う必要があります。¥n".format(n, abs(paid))
+            elif paid > 0:
+                # TODO: プラスになればpaidmuch
+                msg += "{0}さんは、{1}円 もらう必要があります。¥n".format(n, abs(paid))
+        return msg
 
 
 
