@@ -131,6 +131,17 @@ def execute(msg):
                     return '記録に失敗しました。'
     # elif msg[0] == "メンバー登録":
     # userテーブル作成の必要あり
+    
+    elif msg[0] == "記録クリア":
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                try:
+                    sqlStr = sqlStr = "DELETE FROM ledger;"
+                    cur.execute(sqlStr)
+                    result = cur.fetchall()
+                except:
+                    mes = "exception"
+                    print(mes)
 
     elif msg[0] == "精算":
         # SHOW
