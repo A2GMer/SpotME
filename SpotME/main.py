@@ -141,16 +141,16 @@ def get_connection():
     return psycopg2.connect(dsn)
 
 
-def insert_ledger(msg):
-    with get_connection() as conn:
-        with conn.cursor() as cur:
-            try:
-                sqlStr = "INSERT INTO ledger (user_name, amount_money, content) VALUES ({0}, {1}, {2})".format(msg[1], msg[2], msg[3])
-                cur.execute(sqlStr)
-                # (mes,) = cur.fetchone()
-                conn.commit()
-            except:
-                mes = "exception"
+# def insert_ledger(msg):
+#     with get_connection() as conn:
+#         with conn.cursor() as cur:
+#             try:
+#                 sqlStr = "INSERT INTO ledger (user_name, amount_money, content) VALUES ({0}, {1}, {2})".format(msg[1], msg[2], msg[3])
+#                 cur.execute(sqlStr)
+#                 # (mes,) = cur.fetchone()
+#                 conn.commit()
+#             except:
+#                 mes = "exception"
 
 
 # お試し（日付取得 SQL）
