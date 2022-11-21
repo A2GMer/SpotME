@@ -36,9 +36,9 @@ def hello_world():
 ## 1 ##
 #Webhookからのリクエストをチェックします。
 @app.route("/callback", methods=['POST'])
-def get_connection():
-    dsn = 'host={0} port=5432 dbname={1} user={2} password={3}'.format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
-    return psycopg2.connect(dsn)
+# def get_connection():
+#     dsn = 'host={0} port=5432 dbname={1} user={2} password={3}'.format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
+#     return psycopg2.connect(dsn)
 
 
 # # 返事取得関数（今は暫定で日付返す関数）
@@ -100,7 +100,17 @@ def handle_message(event):
 
     # 返信メッセージ作成
     sendMessage = '{0} {1}'.format(msg[0], msg2)
-    a = get_connection()
+    dsn = 'host={0} port=5432 dbname={1} user={2} password={3}'.format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
+
+    with psycopg2.connect(dsn) as conn:
+        with conn.cursor(name="cs") as cur:
+            try:
+                sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
+                cur.execute(sqlStr)
+                (mes,) = cur.fetchone()
+            except:
+                mes = "exception"
+
     # sendMessage = '{0}さんが {1}円 立て替えました。{2}'.format(msg[1], msg[2])
     
 
