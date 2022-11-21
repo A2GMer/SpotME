@@ -42,8 +42,7 @@ def get_connection():
 
 
 # # 返事取得関数（今は暫定で日付返す関数）
-def get_response_message():
-    a = get_connection()
+# def get_response_message():
     # with get_connection() as conn:
         # with conn.cursor(name="cs") as cur:
         #     try:
@@ -101,6 +100,7 @@ def handle_message(event):
 
     # 返信メッセージ作成
     sendMessage = '{0} {1}'.format(msg[0], msg2)
+    a = get_connection()
     # sendMessage = '{0}さんが {1}円 立て替えました。{2}'.format(msg[1], msg[2])
     
 
