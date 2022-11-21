@@ -99,7 +99,7 @@ def handle_message(event):
     msg2 = 'host={0} port=5432 dbname={1} user={2} password={3}'.format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
 
     # 返信メッセージ作成
-    sendMessage = '{0} {1}'.format(msg[0], msg2)
+    # sendMessage = '{0} {1}'.format(msg[0], msg2)
     dsn = 'host={0} port=5432 dbname={1} user={2} password={3}'.format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
 
     with psycopg2.connect(dsn) as conn:
@@ -112,6 +112,7 @@ def handle_message(event):
                 mes = "exception"
 
     # sendMessage = '{0}さんが {1}円 立て替えました。{2}'.format(msg[1], msg[2])
+    sendMessage = mes
     
 
 
