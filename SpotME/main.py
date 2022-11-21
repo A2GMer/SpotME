@@ -126,22 +126,19 @@ def execute(msg):
                     conn.commit()
                     return '{0}さんが {1}円 立て替えました。'.format(msg[1], msg[2])
                 except:
-                    mes = "exception"
-                    print(mes)
                     return '記録に失敗しました。'
     # elif msg[0] == "メンバー登録":
     # userテーブル作成の必要あり
-    
+
     elif msg[0] == "記録クリア":
         with get_connection() as conn:
             with conn.cursor() as cur:
                 try:
                     sqlStr = sqlStr = "DELETE FROM ledger;"
                     cur.execute(sqlStr)
-                    result = cur.fetchall()
+                    return '記録を削除しました。'
                 except:
-                    mes = "exception"
-                    print(mes)
+                    return '記録削除に失敗しました。'
 
     elif msg[0] == "精算":
         # SHOW
@@ -152,8 +149,7 @@ def execute(msg):
                     cur.execute(sqlStr)
                     result = cur.fetchall()
                 except:
-                    mes = "exception"
-                    print(mes)
+                    return '精算情報取得に失敗しました。'
         
         # TODO: 支払総額を取得
         total = 0
