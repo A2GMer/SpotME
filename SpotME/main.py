@@ -121,14 +121,13 @@ def execute(msg):
         with get_connection() as conn:
             with conn.cursor() as cur:
                 try:
-                    sqlStr = """INSERT INTO ledger(user_name, amount_money, content) VALUES(%s);"""
-                    cur.execute(sqlStr, (msg[1], msg[2], msg[3]))
+                    sqlStr = """INSERT INTO ledger(user_name, amount_money, content) VALUES('hoge', 2000, 'hogehoge');"""
+                    cur.execute(sqlStr)
                     # (mes,) = cur.fetchone()
                     conn.commit()
-                    mes = sqlStr, (msg[1], msg[2], msg[3])
                 except:
                     mes = "exception"
-        print(sqlStr, (msg[1], msg[2], msg[3]))
+                    print(mes)
 
     elif msg[0] == "精算":
         # SHOW
