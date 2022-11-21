@@ -181,7 +181,8 @@ def execute(msg):
             elif paid > 0:
                 # TODO: プラスになればpaidmuch
                 msg += "{0}さんは、{1}円 もらう必要があります。\n".format(n, abs(paid))
-            msg += "※小数点は切り上げてます。"
+        
+        msg += "※小数点は切り上げてます。"
         return msg
 
 
