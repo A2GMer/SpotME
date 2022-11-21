@@ -129,6 +129,8 @@ def execute(msg):
                     mes = "exception"
                     print(mes)
                     return '記録に失敗しました。'
+    # elif msg[0] == "メンバー登録":
+    # userテーブル作成の必要あり
 
     elif msg[0] == "精算":
         # SHOW
@@ -172,6 +174,7 @@ def execute(msg):
             elif paid > 0:
                 # TODO: プラスになればpaidmuch
                 msg += "{0}さんは、{1}円 もらう必要があります。\n".format(n, abs(paid))
+            msg += "※小数点は切り上げてます。"
         return msg
 
 
