@@ -91,6 +91,7 @@ def handle_message(event):
         # split by space
         # 空白でSplit
         m = recievedMessage.split()
+        print(m)
         # make reply messages
         sendMessage += execute(m)
         if sendMessage == '':
