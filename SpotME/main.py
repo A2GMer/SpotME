@@ -194,7 +194,7 @@ def execute(msg):
         
         msg += "※小数点は切り上げてます。"
         return msg
-    elif msg[0] == "誰が払えばいい？":
+    elif msg[0] == "誰が払えばいい":
         with get_connection() as conn:
             with conn.cursor() as cur:
                 try:
@@ -229,6 +229,7 @@ def execute(msg):
             if paid < 0:
                 # TODO: マイナスになればpaidlow
                 payman = {n: abs(paid)}
+                print(n)
         
         for p in payman.keys():
             msg += "{0}さんが 払うといい感じです。".format(p)
