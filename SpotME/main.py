@@ -88,8 +88,8 @@ def handle_message(event):
         print(m)
         line_bot_api.reply_message(
             event.reply_token,
-        #ここでメッセージを返します。
-        TextSendMessage(text=sendMessage))
+            #ここでメッセージを返します。
+            TextSendMessage(text=sendMessage))
 
 
 if __name__ == "__main__":
