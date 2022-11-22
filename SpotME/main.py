@@ -76,10 +76,10 @@ def handle_message(event):
     recievedMessage = event.message.text
     
     # 複数行対応のため、改行コードでSplit
-    for m in recievedMessage.split('\n'):
+    for l in recievedMessage.split('\n'):
         # 起動キーワードを検知
         print(m)
-        rtn, m = is_execute(recievedMessage)
+        rtn, m = is_execute(l)
         if rtn == False:
             return
         # 返信メッセージ作成
