@@ -74,22 +74,22 @@ def callback():
 def handle_message(event):
 
     recievedMessage = event.message.text
-    # 起動キーワードを検知
+    
+    # 複数行対応のため、改行コードでSplit
     for m in recievedMessage.split('\n'):
-        print("ループない：{0}".format(m))
-    # rtn, msg = is_execute(recievedMessage)
-    # if rtn == False:
-    #     return
-
-    # 返信メッセージ作成
-    # sendMessage = execute(m)
-    # if sendMessage == '':
-    #     return
-
-    # line_bot_api.reply_message(
-    #     event.reply_token,
-    #     #ここでメッセージを返します。
-    #     TextSendMessage(text=sendMessage))
+        # 起動キーワードを検知
+        rtn, m = is_execute(recievedMessage)
+        if rtn == False:
+            return
+        # 返信メッセージ作成
+        sendMessage = execute(m)
+        if sendMessage == '':
+            return
+            
+        line_bot_api.reply_message(
+            event.reply_token,
+        #ここでメッセージを返します。
+        TextSendMessage(text=sendMessage))
 
 
 if __name__ == "__main__":
