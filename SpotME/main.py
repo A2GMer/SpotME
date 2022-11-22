@@ -4,10 +4,8 @@ import itertools
 import textwrap
 import math
 import os
-# ヘルプ機能
 # 名前が英語でもできるように
 # userテーブルでメンバー登録機能
-# 誰が払うとバランス良い？
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -80,17 +78,6 @@ def handle_message(event):
     rtn, msg = is_execute(recievedMessage)
     if rtn == False:
         return
-    
-    # msg2 = execute(msg)
-
-    # with get_connection() as conn:
-    #     with conn.cursor(name="cs") as cur:
-    #         try:
-    #             sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
-    #             cur.execute(sqlStr)
-    #             (mes,) = cur.fetchone()
-    #         except:
-    #             mes = "exception"
 
     # 返信メッセージ作成
     sendMessage = execute(msg)
@@ -248,7 +235,7 @@ def execute(msg):
             【記録クリアしたい時】
             記録クリア
             【誰が払うと丁度いいか教えてくれる】
-            誰が払う？
+            誰が払えばいい
             
             ⚠︎注意
             多分バグが多いです。
@@ -274,28 +261,3 @@ def execute(msg):
 def get_connection():
     dsn = 'host={0} port=5432 dbname={1} user={2} password={3}'.format(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
     return psycopg2.connect(dsn)
-
-
-# def insert_ledger(msg):
-#     with get_connection() as conn:
-#         with conn.cursor() as cur:
-#             try:
-#                 sqlStr = "INSERT INTO ledger (user_name, amount_money, content) VALUES ({0}, {1}, {2})".format(msg[1], msg[2], msg[3])
-#                 cur.execute(sqlStr)
-#                 # (mes,) = cur.fetchone()
-#                 conn.commit()
-#             except:
-#                 mes = "exception"
-
-
-# お試し（日付取得 SQL）
-# def get_response_message():
-#     with get_connection() as conn:
-#         with get_connection() as conn:
-#             with conn.cursor(name="cs") as cur:
-#                 try:
-#                     sqlStr = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
-#                     cur.execute(sqlStr)
-#                     (mes,) = cur.fetchone()
-#                 except:
-#                     mes = "exception"
