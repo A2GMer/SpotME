@@ -160,11 +160,11 @@ def execute(msg):
         
         if len(result) < 1:
             return '登録情報はありません。'
-        # TODO: 支払総額を取得
+        # 支払総額を取得
         total = 0
         for r in result:
             total += r[1]
-        # TODO: 一人当たりの支払を算出
+        # 一人当たりの支払を算出
         membernum = 0
         for n, r in itertools.groupby(sorted(result, key=lambda x: x[0]), lambda x: x[0]):
             membernum += 1
@@ -173,23 +173,23 @@ def execute(msg):
         # msg = "1人あたりの支払額は、{0}円です。\n\n".format(perpay)
         m = "支払額：{0}円/1人\n\n".format(perpay)
 
-        # TODO: 各人ごとにループ
+        # 各人ごとにループ
         for n, r in itertools.groupby(sorted(result, key=lambda x: x[0]), lambda x: x[0]):
-            # TODO: その人の支払合計額を算出
+            # その人の支払合計額を算出
             pertotal = 0
             for l in list(r):
                 pertotal += l[1]
-            # TODO: その人の支払合計額 - 一人当たりの支払
+            # その人の支払合計額 - 一人当たりの支払
             paid = math.ceil(pertotal - perpay)
             
             if paid == 0:
-                # TODO: 0になればpaidequal
+                # 0になればpaidequal
                 m += "{0}さんは、精算の必要はありません。\n".format(n)
             elif paid < 0:
-                # TODO: マイナスになればpaidlow
+                # マイナスになればpaidlow
                 m += "{0}さんは、{1}円 支払う必要があります。\n".format(n, abs(paid))
             elif paid > 0:
-                # TODO: プラスになればpaidmuch
+                # プラスになればpaidmuch
                 m += "{0}さんは、{1}円 もらう必要があります。\n".format(n, abs(paid))
         
         m += "※小数点は切り上げてます。"
@@ -210,7 +210,7 @@ def execute(msg):
         
         for r in result:
             total += r[1]
-        # TODO: 一人当たりの支払を算出
+        # 一人当たりの支払を算出
         membernum = 0
         for n, r in itertools.groupby(sorted(result, key=lambda x: x[0]), lambda x: x[0]):
             membernum += 1
@@ -218,19 +218,19 @@ def execute(msg):
 
         m = "誰が払ってもいいよ。"
 
-        # TODO: 各人ごとにループ
+        # 各人ごとにループ
         for n, r in itertools.groupby(sorted(result, key=lambda x: x[0]), lambda x: x[0]):
-            # TODO: その人の支払合計額を算出
+            # その人の支払合計額を算出
             pertotal = 0
             for l in list(r):
                 pertotal += l[1]
 
-            # TODO: その人の支払合計額 - 一人当たりの支払
+            # その人の支払合計額 - 一人当たりの支払
             paid = math.ceil(pertotal - perpay)
             
             if paid < 0:
                 m = ""
-                # TODO: マイナスになればpaidlow
+                # マイナスになればpaidlow
                 m += "{0}さん が払うといい感じです。".format(n)
         
         return m
@@ -247,16 +247,19 @@ def execute(msg):
             精算
             【記録クリアしたい時】
             記録クリア
+            【誰が払うと丁度いいか教えてくれる】
+            誰が払う？
             
-            ※多分バグが多いです。
-            許してね。
-            気が向いたら直します。
+            ⚠︎注意
+            多分バグが多いです。
+            許してね。気が向いたら直します。
+            よく無視、無反応になります。
+            (大人の事情で)
             
             【既知バグ】
             英語の名前がダメ⇨WINさんすみません。
             金額に数字以外を入れたらあかん
             【追加したい機能】
-            誰が払うと丁度いいか教えてくれる機能
             メンバー登録機能
         ''')
 
