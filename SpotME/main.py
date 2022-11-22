@@ -140,7 +140,7 @@ def execute(msg):
         
         m = ""
         for r in result:
-            m += "{0}さんが、{1} を {2}円 で立て替えました。".format(r[0], r[2], r[1])
+            m += "{0}さんが、{1} を {2}円 で立て替えました。\n".format(r[0], r[2], r[1])
         return m
 
         
