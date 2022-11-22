@@ -120,9 +120,8 @@ def execute(msg):
                 try:
                     sqlStr = "INSERT INTO ledger(user_name, amount_money, content) VALUES('{0}', {1}, '{2}');".format(msg[1], msg[2], msg[3])
                     cur.execute(sqlStr)
-                    print(sqlStr)
-                    print('execute {0}さんが {1}円 立て替えました。'.format(msg[1], msg[2]))
                     conn.commit()
+                    print('execute {0}さんが {1}円 立て替えました。'.format(msg[1], msg[2]))
                     return '{0}さんが {1}円 立て替えました。'.format(msg[1], msg[2])
                 except:
                     return '記録に失敗しました。'
