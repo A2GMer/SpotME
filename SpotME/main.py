@@ -78,11 +78,12 @@ def handle_message(event):
     # 複数行対応のため、改行コードでSplit
     for m in recievedMessage.split('\n'):
         # 起動キーワードを検知
+        print(m)
         rtn, m = is_execute(recievedMessage)
         if rtn == False:
             return
         # 返信メッセージ作成
-        print(m)
+        
         sendMessage = execute(m)
         if sendMessage == '':
             return
