@@ -1,7 +1,6 @@
 from flask import Flask, request, abort
 import psycopg2
 import itertools
-import textwrap
 import math
 import os
 # 名前が英語でもできるように
@@ -16,6 +15,16 @@ class Execute_Mode:
     CALCULATE = "精算"
 
 Execute_List = [Execute_Mode]
+
+class ledger:
+    user_name = None
+    amount_money = None
+    content = None
+    def __init__(self, u, a, c):
+        self.user_name = u
+        self.amount_money = a
+        self.content = c
+        
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -37,15 +46,10 @@ DB_NAME = os.environ["DB_NAME"]
 DB_USER = os.environ["DB_USER"]
 DB_PASSWORD = os.environ["DB_PASSWORD"]
 
-EXECUTE_ARGCNT = 4
-EXECUTE_PHRASE = "記録"
-
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 @app.route("/")
-# def hello_world():
-    # return "hello world!"
 
 ## 1 ##
 #Webhookからのリクエストをチェックします。
@@ -120,14 +124,15 @@ def is_execute(recievedMessage):
 
 def execute(msg):
     if msg[0] == Execute_Mode.INSERT:
-        # INSERT
+        user = ledger(msg[1], msg[2], msg[3])
         with get_connection() as conn:
             with conn.cursor() as cur:
                 try:
-                    sqlStr = "INSERT INTO ledger(user_name, amount_money, content) VALUES('{0}', {1}, '{2}');".format(msg[1], msg[2], msg[3])
+                    sqlStr = "INSERT INTO ledger(user_name, amount_money, content) VALUES('{0}', {1}, '{2}');"\
+                            .format(user.user_name, user.amount_money, user.content)
                     cur.execute(sqlStr)
                     conn.commit()
-                    return '{0}さんが {1}円 立て替え。\n'.format(msg[1], msg[2])
+                    return '{0}さんが {1}円 立て替え。\n'.format(user.user_name, user.amount_money)
                 except:
                     return '記録に失敗しました。'
     # elif msg[0] == "メンバー登録":
@@ -139,15 +144,16 @@ def execute(msg):
                     sqlStr = "SELECT * FROM ledger;"
                     cur.execute(sqlStr)
                     result = cur.fetchall()
+                    if len(result) < 1:
+                        return "履歴はありません。"
+
+                    m = ""
+                    for r in result:
+                        m += "{0}さんが、{1} を {2}円 で立て替え\n".format(r[0], r[2], r[1])
+                    return m
+
                 except:
                     return '精算情報取得に失敗しました。'
-        if len(result) < 1:
-            return "履歴はありません。"
-        
-        m = ""
-        for r in result:
-            m += "{0}さんが、{1} を {2}円 で立て替え\n".format(r[0], r[2], r[1])
-        return m
 
         
     elif msg[0] == Execute_Mode.CLEAR:
@@ -161,7 +167,6 @@ def execute(msg):
                     return '記録削除に失敗しました。'
 
     elif msg[0] == Execute_Mode.CALCULATE:
-        # SHOW
         with get_connection() as conn:
             with conn.cursor() as cur:
                 try:
@@ -256,9 +261,6 @@ def execute(msg):
         return data
     else:
         return ''
-
-
-
 
 # DB接続
 def get_connection():
