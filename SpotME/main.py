@@ -228,9 +228,9 @@ def execute(msg):
             
             if paid < 0:
                 # TODO: マイナスになればpaidlow
-                msg += "{0}さんが 払うといい感じです。".format(n)
+                r += "{0}さんが 払うといい感じです。".format(n)
         
-        return msg
+        return r
         
     elif msg[0] == 'ヘルプ':
         # 外だしにしたい
