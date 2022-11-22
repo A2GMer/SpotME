@@ -78,7 +78,7 @@ def handle_message(event):
     # 複数行対応のため、改行コードでSplit
     for l in recievedMessage.split('\n'):
         # 起動キーワードを検知
-        print(m)
+        print(l)
         rtn, m = is_execute(l)
         if rtn == False:
             return
