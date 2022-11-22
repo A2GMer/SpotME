@@ -116,10 +116,10 @@ def execute(msg):
     if msg[0] == "記録":
         # INSERT
         with get_connection() as conn:
+            print('execute {0}さんが {1}円 立て替えました。'.format(msg[1], msg[2]))
             with conn.cursor() as cur:
                 try:
                     sqlStr = "INSERT INTO ledger(user_name, amount_money, content) VALUES('{0}', {1}, '{2}');".format(msg[1], msg[2], msg[3])
-                    print('execute {0}さんが {1}円 立て替えました。'.format(msg[1], msg[2]))
                     cur.execute(sqlStr)
                     conn.commit()
                     return '{0}さんが {1}円 立て替えました。'.format(msg[1], msg[2])
