@@ -216,6 +216,8 @@ def execute(msg):
             membernum += 1
         perpay = math.ceil(total / membernum)
 
+        m = "誰が払ってもいいよ。"
+
         # TODO: 各人ごとにループ
         for n, r in itertools.groupby(result, lambda x: x[0]):
             # TODO: その人の支払合計額を算出
@@ -227,6 +229,7 @@ def execute(msg):
             paid = math.ceil(pertotal - perpay)
             
             if paid < 0:
+                m = ""
                 # TODO: マイナスになればpaidlow
                 m += "{0}さんが 払うといい感じです。".format(n)
         
