@@ -114,6 +114,7 @@ def is_execute(recievedMessage):
 
 def execute(msg):
     if msg[0] == "記録":
+        print('execute {0}さんが {1}円 立て替えました。'.format(msg[1], msg[2]))
         # INSERT
         with get_connection() as conn:
             with conn.cursor() as cur:
