@@ -82,14 +82,14 @@ def handle_message(event):
     # 返信メッセージ作成
     for m in msg.split('\n'):
         print(m)
-    sendMessage = execute(m)
-    if sendMessage == '':
-        return
+    # sendMessage = execute(m)
+    # if sendMessage == '':
+    #     return
 
-    line_bot_api.reply_message(
-        event.reply_token,
-        #ここでメッセージを返します。
-        TextSendMessage(text=sendMessage))
+    # line_bot_api.reply_message(
+    #     event.reply_token,
+    #     #ここでメッセージを返します。
+    #     TextSendMessage(text=sendMessage))
 
 
 if __name__ == "__main__":
