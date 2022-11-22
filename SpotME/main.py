@@ -177,10 +177,10 @@ def execute(msg):
                 m += "{0}さん === 精算不要\n".format(n)
             elif paid < 0:
                 # マイナスになればpaidlow
-                m += "{0}さん >>> {1}円 支払い\n".format(n, abs(paid))
+                m += "{0}さん --> {1}円 支払い\n".format(n, abs(paid))
             elif paid > 0:
                 # プラスになればpaidmuch
-                m += "{0}さん <<< {1}円 もらう\n".format(n, abs(paid))
+                m += "{0}さん <-- {1}円 もらう\n".format(n, abs(paid))
         
         m += "※小数点は切り上げてます。"
         return m
