@@ -168,6 +168,7 @@ def execute(msg):
         membernum = 0
         for r in itertools.groupby(result, lambda x: x[0]):
             membernum += 1
+            print(r)
         perpay = math.ceil(total / membernum)
         
         # msg = "1人あたりの支払額は、{0}円です。\n\n".format(perpay)
@@ -231,7 +232,7 @@ def execute(msg):
             if paid < 0:
                 m = ""
                 # TODO: マイナスになればpaidlow
-                m += "{0}さんが 払うといい感じです。".format(n)
+                m += "{0}さん が払うといい感じです。".format(n)
         
         return m
         
