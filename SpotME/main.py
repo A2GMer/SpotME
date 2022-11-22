@@ -121,12 +121,29 @@ def execute(msg):
                     sqlStr = "INSERT INTO ledger(user_name, amount_money, content) VALUES('{0}', {1}, '{2}');".format(msg[1], msg[2], msg[3])
                     cur.execute(sqlStr)
                     conn.commit()
-                    return '{0}さんが {1}円 立て替えました。\n'.format(msg[1], msg[2])
+                    return '{0}さんが {1}円 立て替え。\n'.format(msg[1], msg[2])
                 except:
                     return '記録に失敗しました。'
     # elif msg[0] == "メンバー登録":
     # userテーブル作成の必要あり
+    elif msg[0] == "履歴":
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                try:
+                    sqlStr = "SELECT * FROM ledger;"
+                    cur.execute(sqlStr)
+                    result = cur.fetchall()
+                except:
+                    return '精算情報取得に失敗しました。'
+        if len(result) < 1:
+            return "履歴はありません。"
+        
+        m = ""
+        for r in result:
+            m += "{0}さんが、{1} を {2}円 で立て替えました。".format(r[0], r[2], r[1])
+        return m
 
+        
     elif msg[0] == "記録クリア":
         with get_connection() as conn:
             with conn.cursor() as cur:
