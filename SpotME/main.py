@@ -193,47 +193,50 @@ def execute(msg):
         
         msg += "※小数点は切り上げてます。"
         return msg
-    # elif msg[0] == "誰が払えばいい？":
-    #     with get_connection() as conn:
-    #         with conn.cursor() as cur:
-    #             try:
-    #                 sqlStr = "SELECT * FROM ledger;"
-    #                 cur.execute(sqlStr)
-    #                 result = cur.fetchall()
-    #             except:
-    #                 return '精算情報取得に失敗しました。'
-    #     if len(result) < 1:
-    #         return '登録情報はありません。'
+    elif msg[0] == "誰が払えばいい？":
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                try:
+                    sqlStr = "SELECT * FROM ledger;"
+                    cur.execute(sqlStr)
+                    result = cur.fetchall()
+                except:
+                    return '精算情報取得に失敗しました。'
+        if len(result) < 1:
+            return '登録情報はありません。'
 
-    #     total = 0
+        total = 0
         
-    #     for r in result:
-    #         total += r[1]
-    #     # TODO: 一人当たりの支払を算出
-    #     membernum = 0
-    #     for r in itertools.groupby(result, lambda x: x[0]):
-    #         membernum += 1
-    #     perpay = math.ceil(total / membernum)
+        for r in result:
+            total += r[1]
+        # TODO: 一人当たりの支払を算出
+        membernum = 0
+        for r in itertools.groupby(result, lambda x: x[0]):
+            membernum += 1
+        perpay = math.ceil(total / membernum)
 
-    #     # TODO: 各人ごとにループ
-    #     payman = {}
-    #     for n, r in itertools.groupby(result, lambda x: x[0]):
-    #         # TODO: その人の支払合計額を算出
-    #         pertotal = 0
-    #         for l in list(r):
-    #             pertotal += l[1]
-    #         # TODO: その人の支払合計額 - 一人当たりの支払
-    #         paid = math.ceil(pertotal - perpay)
+        # TODO: 各人ごとにループ
+        for n, r in itertools.groupby(result, lambda x: x[0]):
+            # TODO: その人の支払合計額を算出
+            pertotal = 0
+            for l in list(r):
+                pertotal += l[1]
+
+            # TODO: その人の支払合計額 - 一人当たりの支払
+            paid = math.ceil(pertotal - perpay)
             
-    #         if paid < 0:
-    #             # TODO: マイナスになればpaidlow
-    #             payman = (n, abs(paid))
-    #             msg += "{0}さんは、{1}円 支払う必要があります。\n".format(n, abs(paid))
+            if paid < 0:
+                # TODO: マイナスになればpaidlow
+                payman = {n, abs(paid)}
+        
+        for p in payman.keys():
+            msg += "{0}さんが 払うといい感じです。".format(p)
 
-    #     msg = "{0}さんが 払うといい感じです。".format()
-    #     return msg
+        
+        return msg
         
     elif msg[0] == 'ヘルプ':
+        # 外だしにしたい
         r = textwrap.dedent('''\
             どうも！SpotME!です。
             ■使い方
