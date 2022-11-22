@@ -83,7 +83,7 @@ def handle_message(event):
         if rtn == False:
             return
         # 返信メッセージ作成
-        sendMessage += execute(m)
+        sendMessage += execute(m) + '\n'
         if sendMessage == '':
             return
         
