@@ -226,10 +226,10 @@ def execute(msg):
             # TODO: その人の支払合計額 - 一人当たりの支払
             paid = math.ceil(pertotal - perpay)
             
+            print("{0}さんループ中".format(n))
             if paid < 0:
                 # TODO: マイナスになればpaidlow
                 payman = {n: abs(paid)}
-                print(n)
         
         for p in payman.keys():
             msg += "{0}さんが 払うといい感じです。".format(p)
