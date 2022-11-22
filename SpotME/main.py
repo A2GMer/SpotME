@@ -80,7 +80,9 @@ def handle_message(event):
         return
 
     # 返信メッセージ作成
-    sendMessage = execute(msg)
+    for m in msg.split('\n'):
+        print(m)
+    sendMessage = execute(m)
     if sendMessage == '':
         return
 
