@@ -7,6 +7,16 @@ import os
 # 名前が英語でもできるように
 # userテーブルでメンバー登録機能
 
+class Execute_Mode:
+    INSERT = "記録"
+    HISTORY = "履歴"
+    HELP = "ヘルプ"
+    WHOPAY = "誰が払えばいい"
+    CLEAR = "記録クリア"
+    CALCULATE = "精算"
+
+Execute_List = Execute_Mode
+
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -64,25 +74,24 @@ def callback():
 
 ## 2 ##
 ###############################################
-#LINEのメッセージの取得と返信内容の設定
+#Get messages and set reply messages
 ###############################################
-#LINEでMessageEvent（普通のメッセージを送信された場合）が起こった場合に、
-#def以下の関数を実行します。
-#reply_messageの第一引数のevent.reply_tokenは、イベントの応答に用いるトークンです。
-#第二引数には、linebot.modelsに定義されている返信用のTextSendMessageオブジェクトを渡しています。
+#When a MessageEvent (recieved text messages) occurs on LINE,
+#The first argument of reply_message, event.reply_token, is the token used to respond to the event.
+#The second argument is passed a TextSendMessage object for the reply defined in linebot.models.
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
     recievedMessage = event.message.text
     sendMessage = ''
     # 複数行対応のため、改行コードでSplit
+    # For multi-line, split by newline code
     for l in recievedMessage.split('\n'):
-        print(l)
-        # 起動キーワードを検知
-        rtn, m = is_execute(l)
-        if rtn == False:
-            return
-        # 返信メッセージ作成
+        if is_execute(l) == False: return
+        # split by space
+        # 空白でSplit
+        m = recievedMessage.split()
+        # make reply messages
         sendMessage += execute(m)
         if sendMessage == '':
             return
@@ -94,6 +103,7 @@ def handle_message(event):
 
 
 if __name__ == "__main__":
+    # set the port
     # ポート番号の設定
     port = int(os.getenv("PORT"))
     app.run(host="0.0.0.0", port=port)
@@ -101,19 +111,15 @@ if __name__ == "__main__":
 # 受け取ったメッセージから起動するかどうかを決定する
 def is_execute(recievedMessage):
     
-    # 空白区切りの起動フレーズ数で構成されているか？
+    # 起動フレーズが含まれているか？
     messageList = recievedMessage.split()
-    # if len(messageList) != EXECUTE_ARGCNT:
-    #     return False
-    
-    # if messageList[0] != EXECUTE_PHRASE:
-    #     return False
-
-    return True, messageList
+    if messageList[0] in Execute_List == False:
+        return False
+    return True
 
 
 def execute(msg):
-    if msg[0] == "記録":
+    if msg[0] == Execute_Mode.INSERT:
         # INSERT
         with get_connection() as conn:
             with conn.cursor() as cur:
@@ -126,7 +132,7 @@ def execute(msg):
                     return '記録に失敗しました。'
     # elif msg[0] == "メンバー登録":
     # userテーブル作成の必要あり
-    elif msg[0] == "履歴":
+    elif msg[0] == Execute_Mode.HISTORY:
         with get_connection() as conn:
             with conn.cursor() as cur:
                 try:
@@ -144,7 +150,7 @@ def execute(msg):
         return m
 
         
-    elif msg[0] == "記録クリア":
+    elif msg[0] == Execute_Mode.CLEAR:
         with get_connection() as conn:
             with conn.cursor() as cur:
                 try:
@@ -154,7 +160,7 @@ def execute(msg):
                 except:
                     return '記録削除に失敗しました。'
 
-    elif msg[0] == "精算":
+    elif msg[0] == Execute_Mode.CALCULATE:
         # SHOW
         with get_connection() as conn:
             with conn.cursor() as cur:
@@ -201,7 +207,7 @@ def execute(msg):
         
         m += "※小数点は切り上げてます。"
         return m
-    elif msg[0] == "誰が払えばいい":
+    elif msg[0] == Execute_Mode.WHOPAY:
         with get_connection() as conn:
             with conn.cursor() as cur:
                 try:
@@ -242,7 +248,7 @@ def execute(msg):
         
         return m
         
-    elif msg[0] == 'ヘルプ':
+    elif msg[0] == Execute_Mode.HELP:
         # 外だしにしたい
         r = textwrap.dedent('''\
             どうも！SpotME!です。
