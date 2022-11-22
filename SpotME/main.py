@@ -166,17 +166,15 @@ def execute(msg):
             total += r[1]
         # TODO: 一人当たりの支払を算出
         membernum = 0
-        for r in itertools.groupby(result, lambda x: x[0]):
+        for n, r in itertools.groupby(sorted(result, key=lambda x: x[0]), lambda x: x[0]):
             membernum += 1
-            print(r)
         perpay = math.ceil(total / membernum)
         
         # msg = "1人あたりの支払額は、{0}円です。\n\n".format(perpay)
         m = "支払額：{0}円/1人\n\n".format(perpay)
 
         # TODO: 各人ごとにループ
-        for n, r in itertools.groupby(result, lambda x: x[0]):
-            print(n)
+        for n, r in itertools.groupby(sorted(result, key=lambda x: x[0]), lambda x: x[0]):
             # TODO: その人の支払合計額を算出
             pertotal = 0
             for l in list(r):
@@ -214,14 +212,14 @@ def execute(msg):
             total += r[1]
         # TODO: 一人当たりの支払を算出
         membernum = 0
-        for r in itertools.groupby(result, lambda x: x[0]):
+        for n, r in itertools.groupby(sorted(result, key=lambda x: x[0]), lambda x: x[0]):
             membernum += 1
         perpay = math.ceil(total / membernum)
 
         m = "誰が払ってもいいよ。"
 
         # TODO: 各人ごとにループ
-        for n, r in itertools.groupby(result, lambda x: x[0]):
+        for n, r in itertools.groupby(sorted(result, key=lambda x: x[0]), lambda x: x[0]):
             # TODO: その人の支払合計額を算出
             pertotal = 0
             for l in list(r):
