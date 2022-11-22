@@ -74,7 +74,7 @@ def callback():
 def handle_message(event):
 
     recievedMessage = event.message.text
-    
+    sendMessage = ''
     # 複数行対応のため、改行コードでSplit
     for l in recievedMessage.split('\n'):
         print(l)
@@ -83,10 +83,11 @@ def handle_message(event):
         if rtn == False:
             return
         # 返信メッセージ作成
-        sendMessage = execute(m)
+        sendMessage += execute(m)
         if sendMessage == '':
             return
-        line_bot_api.reply_message(
+        
+    line_bot_api.reply_message(
             event.reply_token,
             #ここでメッセージを返します。
             TextSendMessage(text=sendMessage))
