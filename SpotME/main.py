@@ -77,6 +77,7 @@ def handle_message(event):
     
     # 複数行対応のため、改行コードでSplit
     for l in recievedMessage.split('\n'):
+        print(m)
         # 起動キーワードを検知
         rtn, m = is_execute(l)
         if rtn == False:
@@ -85,7 +86,6 @@ def handle_message(event):
         sendMessage = execute(m)
         if sendMessage == '':
             return
-        print(m)
         line_bot_api.reply_message(
             event.reply_token,
             #ここでメッセージを返します。
