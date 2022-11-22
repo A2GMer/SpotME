@@ -90,8 +90,7 @@ def handle_message(event):
         if is_execute(l) == False: return
         # split by space
         # 空白でSplit
-        m = recievedMessage.split()
-        print(m)
+        m = l.split()
         # make reply messages
         sendMessage += execute(m)
         if sendMessage == '':
