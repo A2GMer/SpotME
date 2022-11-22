@@ -183,7 +183,6 @@ def execute(msg):
             membernum += 1
         perpay = math.ceil(total / membernum)
         
-        # msg = "1人あたりの支払額は、{0}円です。\n\n".format(perpay)
         m = "支払額：{0}円/1人\n\n".format(perpay)
 
         # 各人ごとにループ
@@ -249,36 +248,12 @@ def execute(msg):
         return m
         
     elif msg[0] == Execute_Mode.HELP:
-        # 外だしにしたい
-        r = textwrap.dedent('''\
-            どうも！SpotME!です。
-            ■使い方
-            【誰かが立て替えた時】
-            記録 名前 金額(数字のみ)  立て替えたもの
-            　例）記録 大翔 2000 マクド
-            【精算したい時】
-            精算
-            【記録クリアしたい時】
-            記録クリア
-            【誰が払うと丁度いいか教えてくれる】
-            誰が払えばいい
-            【履歴みたい時】
-            履歴
-            
-            ⚠︎注意
-            多分バグが多いです。
-            許してね。気が向いたら直します。
-            よく無視、無反応になります。
-            (大人の事情で)
-            
-            【既知バグ】
-            英語の名前がダメ⇨WINさんすみません。
-            金額に数字以外を入れたらあかん
-            【追加したい機能】
-            メンバー登録機能
-        ''')
 
-        return r
+        f = open('help_message.txt', 'r', encoding='UTF-8')
+        data = f.read()
+        f.close()
+
+        return data
     else:
         return ''
 
