@@ -83,7 +83,7 @@ def handle_message(event):
         if rtn == False:
             return
         # 返信メッセージ作成
-        sendMessage += execute(m) + '\n'
+        sendMessage += execute(m)
         if sendMessage == '':
             return
         
@@ -121,7 +121,7 @@ def execute(msg):
                     sqlStr = "INSERT INTO ledger(user_name, amount_money, content) VALUES('{0}', {1}, '{2}');".format(msg[1], msg[2], msg[3])
                     cur.execute(sqlStr)
                     conn.commit()
-                    return '{0}さんが {1}円 立て替えました。'.format(msg[1], msg[2])
+                    return '{0}さんが {1}円 立て替えました。\n'.format(msg[1], msg[2])
                 except:
                     return '記録に失敗しました。'
     # elif msg[0] == "メンバー登録":
