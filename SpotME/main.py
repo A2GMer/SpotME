@@ -75,7 +75,7 @@ def handle_message(event):
 
     recievedMessage = event.message.text
     # 起動キーワードを検知
-    for m in recievedMessage.split():
+    for m in recievedMessage.split('\n'):
         print("ループない：{0}".format(m))
     # rtn, msg = is_execute(recievedMessage)
     # if rtn == False:
