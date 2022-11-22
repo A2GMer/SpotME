@@ -171,7 +171,7 @@ def execute(msg):
         perpay = math.ceil(total / membernum)
         
         # msg = "1人あたりの支払額は、{0}円です。\n\n".format(perpay)
-        r = "支払額：{0}円/1人\n\n".format(perpay)
+        m = "支払額：{0}円/1人\n\n".format(perpay)
 
         # TODO: 各人ごとにループ
         for n, r in itertools.groupby(result, lambda x: x[0]):
@@ -184,16 +184,16 @@ def execute(msg):
             
             if paid == 0:
                 # TODO: 0になればpaidequal
-                r += "{0}さんは、精算の必要はありません。\n".format(n)
+                m += "{0}さんは、精算の必要はありません。\n".format(n)
             elif paid < 0:
                 # TODO: マイナスになればpaidlow
-                r += "{0}さんは、{1}円 支払う必要があります。\n".format(n, abs(paid))
+                m += "{0}さんは、{1}円 支払う必要があります。\n".format(n, abs(paid))
             elif paid > 0:
                 # TODO: プラスになればpaidmuch
-                r += "{0}さんは、{1}円 もらう必要があります。\n".format(n, abs(paid))
+                m += "{0}さんは、{1}円 もらう必要があります。\n".format(n, abs(paid))
         
-        r += "※小数点は切り上げてます。"
-        return r
+        m += "※小数点は切り上げてます。"
+        return m
     elif msg[0] == "誰が払えばいい":
         with get_connection() as conn:
             with conn.cursor() as cur:
