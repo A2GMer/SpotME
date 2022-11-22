@@ -176,6 +176,7 @@ def execute(msg):
 
         # TODO: 各人ごとにループ
         for n, r in itertools.groupby(result, lambda x: x[0]):
+            print(n)
             # TODO: その人の支払合計額を算出
             pertotal = 0
             for l in list(r):
