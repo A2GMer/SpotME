@@ -15,7 +15,7 @@ class Execute_Mode:
     CLEAR = "記録クリア"
     CALCULATE = "精算"
 
-Execute_List = Execute_Mode
+Execute_List = [Execute_Mode]
 
 from linebot import (
     LineBotApi, WebhookHandler
